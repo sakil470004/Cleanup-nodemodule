@@ -1,9 +1,9 @@
 Metadata-Version: 2.4
 Name: cleanup-nodemodule
-Version: 0.1.0
+Version: 0.1.1
 Summary: Find and remove node_modules, .next and dist folders (dry-run default).
 Author: sakil470004
-License: MIT
+License-Expression: MIT
 Requires-Python: >=3.8
 Description-Content-Type: text/markdown
 License-File: LICENSE
@@ -78,6 +78,50 @@ python3 /path/to/deleteNodeModules.py
 
 ## Troubleshooting
 - If you hit permission errors, run as a user with the appropriate permissions or adjust ownership/permissions for target folders. Use caution with `sudo`.
+
+## Install & run from terminal (pip)
+
+After publishing to PyPI, developers can install and use the tool directly from the terminal. Recommended steps:
+
+1. Install via pip (from PyPI):
+
+```bash
+python3 -m pip install --user cleanup-nodemodule
+```
+
+2. Make sure your user-level bin directory is on your PATH. On macOS that is commonly `$HOME/Library/Python/<pyversion>/bin`. Example for zsh/Python 3.9:
+
+```bash
+export PATH="$HOME/Library/Python/3.9/bin:$PATH"
+# add the above line to ~/.zshrc to make it permanent
+```
+
+3. Run the installed CLI (dry-run is the default):
+
+```bash
+cleanup-nodemodule --help
+cleanup-nodemodule -p /path/to/project      # dry-run: shows what would be deleted
+cleanup-nodemodule -p /path/to/project --no-dry-run  # actually deletes targets
+```
+
+4. To uninstall or upgrade:
+
+```bash
+python3 -m pip uninstall cleanup-nodemodule
+python3 -m pip install --user --upgrade cleanup-nodemodule
+```
+
+5. If the command `cleanup-nodemodule` isn't found after installation, either add the user scripts directory to PATH (see step 2) or run the script with the full path, for example:
+
+```bash
+$HOME/Library/Python/3.9/bin/cleanup-nodemodule --help
+```
+
+Security & behavior reminders
+- The CLI defaults to dry-run (safe). To make the run destructive you must pass `--no-dry-run` explicitly.
+- Always run a dry-run first and check the output before using `--no-dry-run`.
+
+If you'd like, I can add a short `Examples` section showing real sample output from a dry-run and a recommended GitHub Actions workflow to publish on tag.
 
 ## License / Contribution
 This is a small utility — feel free to adapt it. If you'd like, I can add CLI flags (safe defaults) or a confirmation prompt before destructive runs.
