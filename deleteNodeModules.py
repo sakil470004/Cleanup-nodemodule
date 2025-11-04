@@ -5,7 +5,7 @@ from pathlib import Path
 
 # Safety: set to True to do a dry run (only log what would be deleted).
 # Set to False to actually remove files/directories.
-DRY_RUN = False
+DRY_RUN = True
 
 # Names of folders we want to remove when found at/after minDepth
 TARGET_NAMES = ['node_modules', '.next', 'dist']
