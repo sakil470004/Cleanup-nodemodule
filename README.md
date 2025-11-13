@@ -112,5 +112,43 @@ Security & behavior reminders
 
 If you'd like, I can add a short `Examples` section showing real sample output from a dry-run and a recommended GitHub Actions workflow to publish on tag.
 
+## macOS: Add Python install location to your PATH (optional)
+
+If you installed Python via the official macOS installer or a framework build, the Python scripts directory may be at:
+
+```
+/Library/Frameworks/Python.framework/Versions/3.14/bin
+```
+
+If that directory is not already on your `PATH` you can add it so the `cleanup-nodemodule` command is available in every new terminal.
+
+- Quick check (prints nothing if present):
+
+```bash
+echo "$PATH" | grep -q "/Library/Frameworks/Python.framework/Versions/3.14/bin" || echo "not present"
+```
+
+- To temporarily add it in the current shell session:
+
+```bash
+export PATH="/Library/Frameworks/Python.framework/Versions/3.14/bin:$PATH"
+```
+
+- To add it permanently for zsh (recommended on macOS), append the export to `~/.zshrc` only if it isn't already present:
+
+```bash
+grep -qxF 'export PATH="/Library/Frameworks/Python.framework/Versions/3.14/bin:$PATH"' ~/.zshrc 2>/dev/null || \
+    echo 'export PATH="/Library/Frameworks/Python.framework/Versions/3.14/bin:$PATH"' >> ~/.zshrc
+
+# Reload your shell configuration (or open a new terminal)
+source ~/.zshrc
+```
+
+Notes:
+- Replace `3.14` with your installed Python minor version if different (for example `3.11` or `3.9`).
+- If you use a different shell (bash, fish, etc.) add the same export to your shell's startup file (e.g., `~/.bash_profile`, `~/.profile`, or `~/.config/fish/config.fish`).
+- Appending to `~/.zshrc` is safe because the `grep` check avoids duplicate lines.
+
+
 ## License / Contribution
 This is a small utility — feel free to adapt it. If you'd like, I can add CLI flags (safe defaults) or a confirmation prompt before destructive runs.
